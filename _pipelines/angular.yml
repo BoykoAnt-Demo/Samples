@@ -1,0 +1,21 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+
+- script: npm ci
+  workingDirectory: angular
+
+- script: npm run build
+  workingDirectory: angular
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: 'angular/dist/angular'
+    artifact: 'webapp'
+    publishLocation: 'pipeline'
