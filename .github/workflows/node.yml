@@ -16,6 +16,7 @@ jobs:
       with:
         node-version: 18.x
         cache: 'npm'
+        cache-dependency-path: node/package-lock.json
         
     - run: npm ci --only=prod
       working-directory: node
