@@ -1,0 +1,31 @@
+name: angular
+
+on:
+   workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        cache-dependency-path: angular/package-lock.json
+        
+    - run: npm ci
+      working-directory: angular
+    
+    - run: npm run build
+      working-directory: angular
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: webapp
+        path: angular/dist/angular
