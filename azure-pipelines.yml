@@ -20,6 +20,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: 'dotnet/out/wwwroot'
+    targetPath: 'blazor/out'
     artifact: 'binaries'
     publishLocation: 'pipeline'
