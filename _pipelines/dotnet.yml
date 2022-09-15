@@ -1,0 +1,25 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+
+- script: dotnet restore
+  workingDirectory: dotnet
+
+- script: dotnet build --no-restore
+  workingDirectory: dotnet
+
+- script: dotnet publish -o out
+  workingDirectory: dotnet
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: 'dotnet/out'
+    artifact: 'binaries'
+    publishLocation: 'pipeline'

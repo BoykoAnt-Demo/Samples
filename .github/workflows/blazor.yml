@@ -1,0 +1,35 @@
+name: blazor
+
+on:
+   workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: blazor
+      
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: blazor
+      
+    - name: Publish
+      run: dotnet publish -o out
+      working-directory: blazor
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: binaries
+        path: blazor/out
