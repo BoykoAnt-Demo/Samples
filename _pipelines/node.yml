@@ -1,0 +1,39 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+
+- script: npm ci --only=prod
+  workingDirectory: node
+
+- script: mkdir out
+  workingDirectory: node
+
+- script: cp -R bin/ out/bin
+  workingDirectory: node
+
+- script: cp -R node_modules/ out/node_modules
+  workingDirectory: node
+
+- script: cp -R public/ out/public
+  workingDirectory: node
+
+- script: cp -R routes/ out/routes
+  workingDirectory: node
+
+- script: cp -R views/ out/views
+  workingDirectory: node
+
+- script: cp app.js out/
+  workingDirectory: node
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '/node/out'
+    artifact: 'webapp'
+    publishLocation: 'pipeline'
