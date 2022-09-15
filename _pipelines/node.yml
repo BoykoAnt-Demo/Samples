@@ -34,6 +34,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '/node/out'
+    targetPath: 'node/out'
     artifact: 'webapp'
     publishLocation: 'pipeline'
