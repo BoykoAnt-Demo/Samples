@@ -20,6 +20,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)/dotnet/out'
+    targetPath: 'dotnet/out'
     artifact: 'binaries'
     publishLocation: 'pipeline'
