@@ -1,0 +1,48 @@
+name: node
+
+on:
+   workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        
+    - run: npm ci --only=prod
+      working-directory: node
+    
+    - run: mkdir out
+      working-directory: node
+    
+    - run: cp -R bin/ out/bin
+      working-directory: node
+      
+    - run: cp -R node_modules/ out/node_modules
+      working-directory: node
+      
+    - run: cp -R public/ out/public
+      working-directory: node
+      
+    - run: cp -R routes/ out/routes
+      working-directory: node
+      
+    - run: cp -R views/ out/views
+      working-directory: node
+      
+    - run: cp app.js out/
+      working-directory: node
+      
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: webapp
+        path: node/out
